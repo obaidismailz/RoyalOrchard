@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      String   @default("Admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MultanContent {
+  id              Int      @id @default(autoincrement())
+  heroTitle       String
+  heroDescription String
+  heroImageUrl    String
+  sectionsData    Json?    // For flexible additional content below
+  updatedAt       DateTime @updatedAt
+}
+
+model Project {
+  id              Int      @id @default(autoincrement())
+  name            String
+  slug            String   @unique
+  heroTitle       String   @default("A Vision of Luxury")
+  heroDescription String   @default("Experience unparalleled living.")
+  heroImageUrl    String   @default("/mul.jpeg")
+  sectionsData    Json?
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
